@@ -62,5 +62,17 @@ namespace System.ComponentModel
         protected InvalidEnumArgumentException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+
+            /// <summary>
+        /// Creates an exception for an invalid enum value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">the invalid value</param>
+        /// <param name="argumentName">the name of the argument</param>
+        /// <returns></returns>
+        public static Exception Create<T>(T value, [CallerArgumentExpression(nameof(value))] string argumentName = null!)
+        {
+            return new System.ComponentModel.InvalidEnumArgumentException(argumentName, (int)Convert.ChangeType(value, typeof(int))!, typeof(T));
+        }
     }
 }
